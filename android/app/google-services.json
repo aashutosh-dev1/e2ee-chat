@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "337021706296",
+    "project_id": "pin-drop-chat-e2ee",
+    "storage_bucket": "pin-drop-chat-e2ee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337021706296:android:1a0bf90218337d0b6046cd",
+        "android_client_info": {
+          "package_name": "com.example.pin_drop_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASfLV2bZc3LjTgi-en2JF6yrKxTFOnOdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
