@@ -1,0 +1,42 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.0'
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Notify backend of success
+        if: success()
+        run: |
+          curl -X POST https://git-flow-flutter.onrender.com/workflow-status \
+            -H "Content-Type: application/json" \
+            -d '{"status": "success", "repo": "${{ github.repository }}", "sha": "${{ github.sha }}", "run_id": "${{ github.run_id }}", "artifact_name": "app-release"}'
+
+      - name: Notify backend of failure
+        if: failure()
+        run: |
+          curl -X POST https://git-flow-flutter.onrender.com/workflow-status \
+            -H "Content-Type: application/json" \
+            -d '{"status": "failure", "repo": "${{ github.repository }}", "sha": "${{ github.sha }}", "run_id": "${{ github.run_id }}"}'
