@@ -13,7 +13,13 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.0'
+          flutter-version: '3.38.4'
+
+      - name: Notify backend of start
+        run: |
+          curl -X POST https://git-flow-flutter.onrender.com/workflow-status \
+            -H "Content-Type: application/json" \
+            -d '{"status": "in_progress", "repo": "${{ github.repository }}", "sha": "${{ github.sha }}", "run_id": "${{ github.run_id }}"}'
 
       - name: Install Dependencies
         run: flutter pub get
